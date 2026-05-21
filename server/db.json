@@ -1,0 +1,146 @@
+{
+  "contacts": {
+    "967844066": {
+      "chatId": "967844066",
+      "name": "nos1roff______🦅",
+      "lastMessage": "",
+      "time": "15:27",
+      "source": "telegram",
+      "unreadCount": 0,
+      "messages": []
+    },
+    "978996326": {
+      "chatId": "978996326",
+      "name": "*Абдуллох*",
+      "lastMessage": "",
+      "time": "17:24",
+      "source": "telegram",
+      "unreadCount": 0,
+      "messages": []
+    },
+    "1150669888": {
+      "chatId": "1150669888",
+      "name": "D",
+      "lastMessage": "asdfasfd",
+      "time": "14:23",
+      "source": "telegram",
+      "unreadCount": 0,
+      "messages": [
+        {
+          "id": 21,
+          "text": "Dd",
+          "time": "15:30",
+          "isMe": false
+        },
+        {
+          "id": 22,
+          "text": "/start",
+          "time": "15:30",
+          "isMe": false
+        },
+        {
+          "id": 23,
+          "text": "Hh",
+          "time": "15:30",
+          "isMe": false
+        },
+        {
+          "id": 27,
+          "text": "Ybhsbbs",
+          "time": "15:33",
+          "isMe": false
+        },
+        {
+          "id": 31,
+          "text": "Ttvtc",
+          "time": "15:37",
+          "isMe": false
+        },
+        {
+          "id": 32,
+          "text": "asdfasdf",
+          "time": "15:37",
+          "isMe": true
+        },
+        {
+          "id": 55,
+          "text": "",
+          "time": "15:46",
+          "isMe": false
+        },
+        {
+          "id": 59,
+          "text": "Shshshhash",
+          "time": "15:54",
+          "isMe": false
+        },
+        {
+          "id": 60,
+          "text": "asdfasf",
+          "time": "15:54",
+          "isMe": true
+        },
+        {
+          "id": 72,
+          "text": "Jjj😂",
+          "time": "15:56",
+          "isMe": false
+        },
+        {
+          "id": 78,
+          "text": "[Rasm]",
+          "time": "15:59",
+          "isMe": false,
+          "type": "photo",
+          "mediaUrl": "https://api.telegram.org/file/bot8862096129:AAElvj7naYtnhehF66GgFBua_12tngCbd34/photos/file_1.jpg"
+        },
+        {
+          "id": 95,
+          "text": "[GIF]",
+          "time": "16:06",
+          "isMe": false,
+          "type": "gif",
+          "mediaUrl": "https://api.telegram.org/file/bot8862096129:AAElvj7naYtnhehF66GgFBua_12tngCbd34/animations/file_10.mp4"
+        },
+        {
+          "id": 265,
+          "text": "asdfasfd",
+          "time": "14:23",
+          "isMe": false,
+          "type": "text",
+          "mediaUrl": null,
+          "fileId": null
+        }
+      ]
+    },
+    "2041703880": {
+      "chatId": "2041703880",
+      "name": "Насыров.",
+      "lastMessage": "",
+      "time": "17:11",
+      "source": "telegram",
+      "unreadCount": 0,
+      "messages": []
+    }
+  },
+  "savedGifs": [
+    "https://media.giphy.com/media/l0Exd3XQ1FpG8g7lK/giphy.gif",
+    "https://media.giphy.com/media/3o7abKhOpu0NXS3HWM/giphy.gif",
+    "https://media.giphy.com/media/d31w24psGYeekCZy/giphy.gif",
+    "https://api.telegram.org/file/bot8862096129:AAElvj7naYtnhehF66GgFBua_12tngCbd34/animations/file_10.mp4",
+    "https://api.telegram.org/file/bot8862096129:AAElvj7naYtnhehF66GgFBua_12tngCbd34/animations/file_28.mp4",
+    "https://api.telegram.org/file/bot8862096129:AAElvj7naYtnhehF66GgFBua_12tngCbd34/animations/file_26.mp4"
+  ],
+  "savedStickers": [
+    "https://api.telegram.org/file/bot8862096129:AAElvj7naYtnhehF66GgFBua_12tngCbd34/stickers/file_4.webp",
+    "https://api.telegram.org/file/bot8862096129:AAElvj7naYtnhehF66GgFBua_12tngCbd34/stickers/file_7.webp",
+    {
+      "url": "https://api.telegram.org/file/bot8862096129:AAElvj7naYtnhehF66GgFBua_12tngCbd34/stickers/file_32.webm",
+      "fileId": null
+    },
+    {
+      "url": "https://api.telegram.org/file/bot8862096129:AAElvj7naYtnhehF66GgFBua_12tngCbd34/stickers/file_38.webm",
+      "fileId": null
+    }
+  ]
+}
