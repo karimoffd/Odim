@@ -6,11 +6,11 @@ export const colors = {
   primaryDark: '#1D4ED8',
 
   // Background
-  bgMain: '#F0F7FF',
+  bgMain: '#ECF0FB',
   bgSidebar: '#FFFFFF',
   bgCard: '#FFFFFF',
-  bgGradientStart: '#E0EEFF',
-  bgGradientEnd: '#F0F7FF',
+  bgGradientStart: '#ECF0FB',
+  bgGradientEnd: '#ECF0FB',
   bgHover: '#EBF3FF',
   bgActive: '#DBEAFE',
   bgInput: '#F3F6FB',

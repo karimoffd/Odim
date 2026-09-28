@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { io, Socket } from 'socket.io-client';
-import { FiVideo, FiVideoOff, FiMic, FiMicOff, FiPhoneOff, FiUser } from 'react-icons/fi';
+import { TbVideo, TbVideoOff, TbMicrophone, TbMicrophoneOff, TbPhoneOff, TbUser } from 'react-icons/tb';
 import './VideoCallRoom.css';
 
 // ---------------- AUDIO WAVE VISUALIZER COMPONENT ----------------
@@ -418,7 +418,7 @@ export default function VideoCallRoom() {
               <div className="remote-video-placeholder">
                 <div className="avatar-wave-wrapper">
                   <div className="remote-avatar">
-                    <FiUser size={48} color="#fff" />
+                    <TbUser size={48} color="#fff" />
                   </div>
                   <div className="pulsing-waves-holder">
                     <AudioVisualizer stream={remoteStream} color="#007aff" isMuted={false} />
@@ -442,7 +442,7 @@ export default function VideoCallRoom() {
           {/* Camera Off Placeholders */}
           {isVideoOff && (
             <div className={hasJoined ? "local-video no-cam-placeholder-client" : "preview-video no-cam-placeholder-client"} style={hasJoined ? { display: 'flex', flexDirection: 'column', gap: '8px', alignItems: 'center', justifyContent: 'center' } : {}}>
-              <FiVideoOff size={hasJoined ? 24 : 48} color="#888" style={{ marginBottom: hasJoined ? '0px' : '10px' }} />
+              <TbVideoOff size={hasJoined ? 24 : 48} color="#888" style={{ marginBottom: hasJoined ? '0px' : '10px' }} />
               <span>Kamera {hasJoined ? 'yopiq' : 'o\'chirilgan'}</span>
             </div>
           )}
@@ -465,10 +465,10 @@ export default function VideoCallRoom() {
 
               <div className="preview-controls-row">
                 <button className={`control-btn ${isMuted ? 'danger' : ''}`} onClick={toggleMute}>
-                  {isMuted ? <FiMicOff /> : <FiMic />}
+                  {isMuted ? <TbMicrophoneOff /> : <TbMicrophone />}
                 </button>
                 <button className={`control-btn ${isVideoOff ? 'danger' : ''}`} onClick={toggleVideo}>
-                  {isVideoOff ? <FiVideoOff /> : <FiVideo />}
+                  {isVideoOff ? <TbVideoOff /> : <TbVideo />}
                 </button>
               </div>
 
@@ -495,13 +495,13 @@ export default function VideoCallRoom() {
               
               <div className="call-controls">
                 <button className={`control-btn ${isMuted ? 'danger' : ''}`} onClick={toggleMute}>
-                  {isMuted ? <FiMicOff /> : <FiMic />}
+                  {isMuted ? <TbMicrophoneOff /> : <TbMicrophone />}
                 </button>
                 <button className="control-btn end-call" onClick={endCall}>
-                  <FiPhoneOff />
+                  <TbPhoneOff />
                 </button>
                 <button className={`control-btn ${isVideoOff ? 'danger' : ''}`} onClick={toggleVideo}>
-                  {isVideoOff ? <FiVideoOff /> : <FiVideo />}
+                  {isVideoOff ? <TbVideoOff /> : <TbVideo />}
                 </button>
               </div>
             </>

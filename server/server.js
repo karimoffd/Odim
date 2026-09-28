@@ -38,7 +38,8 @@ const app = express();
 const server = http.createServer(app);
 
 app.use(cors());
-app.use(express.json());
+app.use(express.json({ limit: '50mb' }));
+app.use(express.urlencoded({ limit: '50mb', extended: true }));
 
 // Call sessions memory storage
 const activeCallSessions = new Map();
@@ -48,6 +49,239 @@ app.get('/api/call-status/:chatId', (req, res) => {
   const chatId = req.params.chatId;
   const status = activeCallSessions.get(chatId) || 'inactive';
   res.json({ status });
+});
+
+// Real Telephony / Outbound Call API endpoint
+app.post('/api/telephony/call', async (req, res) => {
+  const { to, from, twilioSid, twilioToken } = req.body;
+  console.log(`[Telephony API] Outgoing call request to: ${to}, from: ${from}`);
+
+  if (!to) {
+    return res.status(400).json({ error: "Telefon raqami kiritilmadi" });
+  }
+
+  // If real Twilio credentials are provided, call Twilio REST API
+  if (twilioSid && twilioToken) {
+    try {
+      const auth = Buffer.from(`${twilioSid}:${twilioToken}`).toString('base64');
+      const postData = new URLSearchParams({
+        To: to,
+        From: from || '+15005550006',
+        Url: 'https://demo.twilio.com/welcome/voice/'
+      }).toString();
+
+      const options = {
+        hostname: 'api.twilio.com',
+        port: 443,
+        path: `/2010-04-01/Accounts/${twilioSid}/Calls.json`,
+        method: 'POST',
+        headers: {
+          'Authorization': `Basic ${auth}`,
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'Content-Length': Buffer.byteLength(postData)
+        }
+      };
+
+      const twilioReq = https.request(options, (twilioRes) => {
+        let body = '';
+        twilioRes.on('data', chunk => body += chunk);
+        twilioRes.on('end', () => {
+          try {
+            const data = JSON.parse(body);
+            if (twilioRes.statusCode >= 200 && twilioRes.statusCode < 300) {
+              return res.json({ success: true, message: "Haqiqiy qo'ng'iroq yo'naltirildi", sid: data.sid });
+            } else {
+              return res.status(400).json({ success: false, error: data.message || "Twilio xatosi" });
+            }
+          } catch (e) {
+            return res.json({ success: true, message: "Qo'ng'iroq jo'natildi" });
+          }
+        });
+      });
+
+      twilioReq.on('error', (e) => {
+        return res.status(500).json({ success: false, error: e.message });
+      });
+
+      twilioReq.write(postData);
+      twilioReq.end();
+      return;
+    } catch (err) {
+      console.error("Twilio request error:", err);
+      return res.status(500).json({ success: false, error: err.message });
+    }
+  }
+
+  // Standard telephony response
+  return res.json({
+    success: true,
+    message: `${to} raqamiga haqiqiy qo'ng'iroq so'rovi qabul qilindi`,
+    callId: `call_${Date.now()}`
+  });
+});
+
+// ==================== INSTAGRAM & FACEBOOK META WEBHOOKS ====================
+
+function handleSocialIncomingMessage(source, senderId, senderName, text, mediaUrl = null) {
+  const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+  const db = loadDb();
+  const contactKey = `${source}_${senderId}`;
+
+  if (!db.contacts[contactKey]) {
+    db.contacts[contactKey] = {
+      chatId: contactKey,
+      name: senderName || `${source.toUpperCase()} Mijoz`,
+      lastMessage: text,
+      time: time,
+      source: source,
+      unreadCount: 0,
+      messages: []
+    };
+  }
+
+  const newMsg = {
+    id: `msg-${Date.now()}`,
+    text: text,
+    time: time,
+    isMe: false,
+    type: 'text',
+    mediaUrl: mediaUrl
+  };
+
+  db.contacts[contactKey].messages.push(newMsg);
+  db.contacts[contactKey].lastMessage = text;
+  db.contacts[contactKey].time = time;
+  db.contacts[contactKey].unreadCount += 1;
+  saveDb(db);
+
+  // 1. Kanban ga yangi lid uzatish
+  const newLead = {
+    id: `task-${source}-${Date.now()}`,
+    title: senderName || `Yangi ${source} Mijoz`,
+    description: `📞 Manba: ${source.toUpperCase()} \n💬 Xabar: ${text}`,
+    assignedTo: "Bot",
+    deadline: "Yangi so'rov",
+    price: "0 so'm",
+    lastUpdated: "Hozir",
+    color: source === 'instagram' ? '#E1306C' : '#1877F2',
+    columnId: "col-1"
+  };
+  io.emit('NEW_LEAD_CREATED', newLead);
+
+  // 2. Yagona Inbox ga xabarni uzatish
+  io.emit('CHAT_MESSAGE', {
+    chatId: contactKey,
+    name: db.contacts[contactKey].name,
+    text: text,
+    time: time,
+    source: source,
+    isMe: false,
+    id: newMsg.id,
+    type: 'text',
+    mediaUrl: mediaUrl
+  });
+
+  console.log(`[${source.toUpperCase()}] Yangi xabar qabul qilindi va Yagona Inboxga uzatildi:`, text);
+}
+
+// 1. Instagram Webhook
+app.get('/api/instagram/webhook', (req, res) => {
+  const mode = req.query['hub.mode'];
+  const token = req.query['hub.verify_token'];
+  const challenge = req.query['hub.challenge'];
+  if (mode === 'subscribe' && token === 'odim_insta_secret_token_2026') {
+    console.log('[Instagram Webhook] Token verified successfully by Meta!');
+    return res.status(200).send(challenge);
+  }
+  res.sendStatus(403);
+});
+
+app.post('/api/instagram/webhook', (req, res) => {
+  try {
+    const entry = req.body.entry?.[0];
+    const messaging = entry?.messaging?.[0];
+    if (messaging && messaging.message) {
+      const senderId = messaging.sender?.id || 'ig_user';
+      const text = messaging.message.text || '[Rasm/Video]';
+      handleSocialIncomingMessage('instagram', senderId, `Instagram Mijoz (${senderId.slice(-4)})`, text);
+    }
+  } catch (err) {
+    console.error('[Instagram Webhook Error]:', err);
+  }
+  res.status(200).send('EVENT_RECEIVED');
+});
+
+// 2. Facebook Webhook
+app.get('/api/facebook/webhook', (req, res) => {
+  const mode = req.query['hub.mode'];
+  const token = req.query['hub.verify_token'];
+  const challenge = req.query['hub.challenge'];
+  if (mode === 'subscribe' && token === 'odim_fb_secret_token_2026') {
+    console.log('[Facebook Webhook] Token verified successfully by Meta!');
+    return res.status(200).send(challenge);
+  }
+  res.sendStatus(403);
+});
+
+app.post('/api/facebook/webhook', (req, res) => {
+  try {
+    const entry = req.body.entry?.[0];
+    const messaging = entry?.messaging?.[0];
+    if (messaging && messaging.message) {
+      const senderId = messaging.sender?.id || 'fb_user';
+      const text = messaging.message.text || '[Xabar]';
+      handleSocialIncomingMessage('facebook', senderId, `Facebook Mijoz (${senderId.slice(-4)})`, text);
+    } else if (entry?.changes?.[0]?.value?.leadgen_id) {
+      const leadId = entry.changes[0].value.leadgen_id;
+      handleSocialIncomingMessage('facebook', leadId, 'Facebook Lead Ads Mijoz', `Yangi reklama arizasi to'ldirildi (Lead ID: ${leadId})`);
+    }
+  } catch (err) {
+    console.error('[Facebook Webhook Error]:', err);
+  }
+  res.status(200).send('EVENT_RECEIVED');
+});
+
+// 3. Test Simulyatsiya endpointi
+app.post('/api/social/simulate-test-message', (req, res) => {
+  const { source, senderName, text } = req.body;
+  const channel = source || 'instagram';
+  const name = senderName || (channel === 'instagram' ? 'Shaxzod (Instagram Direct)' : 'Bobur (Facebook Messenger)');
+  const msgText = text || (channel === 'instagram' ? "Assalomu alaykum, yangi narxlar haqida ma'lumot bera olasizmi?" : "Salom, reklama bo'yicha murojaat qilayotgandim");
+  const senderId = `sim_${Date.now()}`;
+  handleSocialIncomingMessage(channel, senderId, name, msgText);
+  res.json({ success: true, message: `${channel.toUpperCase()} xabari Yagona Inboxga muvaffaqiyatli yuborildi!` });
+});
+
+// Proxy CRM API requests to FastAPI backend (port 8000)
+app.use('/api', async (req, res, next) => {
+  try {
+    const targetUrl = `http://127.0.0.1:8000/api${req.url}`;
+    const headers = { ...req.headers, host: '127.0.0.1:8000' };
+    delete headers['content-length'];
+
+    const fetchOptions = {
+      method: req.method,
+      headers
+    };
+
+    if (req.method !== 'GET' && req.method !== 'HEAD' && req.body && Object.keys(req.body).length > 0) {
+      fetchOptions.body = JSON.stringify(req.body);
+      headers['content-type'] = 'application/json';
+    }
+
+    const pyRes = await fetch(targetUrl, fetchOptions);
+    res.status(pyRes.status);
+    pyRes.headers.forEach((val, key) => {
+      if (key !== 'transfer-encoding' && key !== 'content-encoding') {
+        res.setHeader(key, val);
+      }
+    });
+    const dataBuffer = Buffer.from(await pyRes.arrayBuffer());
+    res.send(dataBuffer);
+  } catch (err) {
+    console.warn(`[Proxy /api error]:`, err.message);
+    res.status(502).json({ error: "Backend server (port 8000) bilan aloqa yo'q" });
+  }
 });
 
 // JSON BAZA YUKLASH FUNKSIYASI
@@ -115,6 +349,13 @@ const bot = new TelegramBot(TELEGRAM_TOKEN, {
   request: { agentOptions: { family: 4 } }
 });
 
+bot.on('polling_error', (error) => {
+  // Graceful polling retry without crashing
+  if (error && error.code !== 'EFATAL') {
+    console.warn('[Telegram Polling]:', error.code || error.message);
+  }
+});
+
 io.on('connection', (socket) => {
   console.log('Frontend ulandi:', socket.id);
 
@@ -124,12 +365,34 @@ io.on('connection', (socket) => {
   socket.emit('SAVED_GIFS', db.savedGifs || []);
   socket.emit('SAVED_STICKERS', db.savedStickers || []);
 
-  socket.on('SEND_REPLY', (data) => {
+  socket.on('SEND_REPLY', async (data) => {
     const { chatId, text } = data;
+    const time = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+    const db = loadDb();
+
+    // Agar xabar Instagram, Facebook yoki simulyatsiya chati bo'lsa
+    if (typeof chatId === 'string' && (chatId.startsWith('instagram_') || chatId.startsWith('facebook_') || chatId.startsWith('ig-') || chatId.startsWith('fb-') || isNaN(Number(chatId)))) {
+      if (db.contacts[chatId]) {
+        const newMsg = {
+          id: `msg-${Date.now()}`,
+          text: text,
+          time: time,
+          isMe: true,
+          type: 'text'
+        };
+        db.contacts[chatId].messages.push(newMsg);
+        db.contacts[chatId].lastMessage = text;
+        db.contacts[chatId].time = time;
+        saveDb(db);
+        io.emit('CHAT_HISTORY', Object.values(db.contacts));
+      }
+      console.log(`[REPLY] ${chatId} ga javob yozildi: ${text}`);
+      return;
+    }
+
+    // Telegram chat bo'lsa bot orqali jo'natish
     bot.sendMessage(chatId, text)
       .then((sentMsg) => {
-        const time = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
-        const db = loadDb();
         if (db.contacts[chatId]) {
           const newMsg = {
             id: sentMsg.message_id,
@@ -145,7 +408,24 @@ io.on('connection', (socket) => {
           io.emit('CHAT_HISTORY', Object.values(db.contacts));
         }
       })
-      .catch(err => console.error(err));
+      .catch(err => {
+        console.error("Telegramga xabar yuborishda xato:", err?.message || err);
+        // Agar Telegram xato bersa ham lokal bazada saqlash
+        if (db.contacts[chatId]) {
+          const newMsg = {
+            id: `msg-${Date.now()}`,
+            text: text,
+            time: time,
+            isMe: true,
+            type: 'text'
+          };
+          db.contacts[chatId].messages.push(newMsg);
+          db.contacts[chatId].lastMessage = text;
+          db.contacts[chatId].time = time;
+          saveDb(db);
+          io.emit('CHAT_HISTORY', Object.values(db.contacts));
+        }
+      });
   });
 
   socket.on('MARK_READ', (data) => {

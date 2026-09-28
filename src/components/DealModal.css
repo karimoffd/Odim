@@ -48,7 +48,7 @@
 
 .deal-brand {
   font-size: 20px;
-  font-weight: 800;
+  font-weight: 400;
   color: #212529;
   margin: 0;
 }
@@ -66,7 +66,7 @@
   padding: 4px 12px;
   border-radius: 20px;
   font-size: 13px;
-  font-weight: 600;
+  font-weight: 400;
   cursor: pointer;
 }
 
@@ -85,12 +85,12 @@
 
 .dropdown-btn {
   font-size: 13px;
-  font-weight: 600;
+  font-weight: 400;
   color: #495057;
   background: white;
   border: 1px solid #DEE2E6;
-  padding: 6px 12px;
-  border-radius: 8px;
+  padding: 6px 14px;
+  border-radius: 29px;
   display: flex;
   align-items: center;
   gap: 8px;
@@ -100,19 +100,20 @@
 .cancel-btn {
   background: none;
   border: none;
-  font-weight: 600;
+  font-weight: 400;
   color: #ADB5BD;
   cursor: pointer;
   padding: 8px 16px;
+  border-radius: 29px;
 }
 
 .save-btn {
-  background: #212529;
+  background: #191919;
   color: white;
   border: none;
   padding: 8px 24px;
-  border-radius: 10px;
-  font-weight: 700;
+  border-radius: 29px;
+  font-weight: 400;
   font-size: 14px;
   cursor: pointer;
   transition: opacity 0.2s;
@@ -146,7 +147,7 @@
   border: none;
   padding: 12px 0;
   font-size: 13px;
-  font-weight: 600;
+  font-weight: 400;
   color: #495057;
   cursor: pointer;
   position: relative;
@@ -202,7 +203,7 @@
 .crm-section-header h3 {
   margin: 0;
   font-size: 14px;
-  font-weight: 700;
+  font-weight: 400;
   color: #212529;
 }
 
@@ -229,7 +230,7 @@
 
 .crm-field label {
   font-size: 11px;
-  font-weight: 600;
+  font-weight: 400;
   color: #ADB5BD;
 }
 
@@ -248,7 +249,7 @@
   border-radius: 8px;
   font-size: 13px;
   color: #212529;
-  font-weight: 500;
+  font-weight: 400;
   outline: none;
 }
 
@@ -278,7 +279,7 @@
   padding: 8px 12px;
   border-radius: 8px;
   font-size: 13px;
-  font-weight: 500;
+  font-weight: 400;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -292,7 +293,7 @@
   position: absolute;
   right: 12px;
   font-size: 13px;
-  font-weight: 700;
+  font-weight: 400;
   display: flex;
   align-items: center;
   gap: 4px;
@@ -350,7 +351,7 @@
   align-items: center;
   justify-content: center;
   font-size: 10px;
-  font-weight: 800;
+  font-weight: 400;
 }
 
 .user-email {
@@ -373,7 +374,7 @@
   border: none;
   color: #339AF0;
   font-size: 12px;
-  font-weight: 600;
+  font-weight: 400;
   cursor: pointer;
 }
 
@@ -382,7 +383,7 @@
   border: none;
   color: #339AF0;
   font-size: 13px;
-  font-weight: 500;
+  font-weight: 400;
   text-align: left;
   padding: 0;
   cursor: pointer;
@@ -392,11 +393,11 @@
   width: 100%;
   background: white;
   border: 1px solid #DEE2E6;
-  border-radius: 8px;
-  padding: 8px;
-  color: #339AF0;
+  border-radius: 29px;
+  padding: 8px 16px;
+  color: #191919;
   font-size: 13px;
-  font-weight: 600;
+  font-weight: 400;
   display: flex;
   align-items: center;
   justify-content: flex-start;
@@ -409,7 +410,7 @@
   border: none;
   color: #ADB5BD;
   font-size: 13px;
-  font-weight: 600;
+  font-weight: 400;
   padding: 8px 0;
   text-align: left;
   cursor: pointer;
@@ -443,7 +444,7 @@
   background: none;
   border: none;
   font-size: 12px;
-  font-weight: 700;
+  font-weight: 400;
   color: #ADB5BD;
   padding: 4px 0;
   cursor: pointer;
@@ -459,7 +460,7 @@
 
 .feed-form-title {
   font-size: 13px;
-  font-weight: 600;
+  font-weight: 400;
   margin-bottom: 8px;
 }
 
@@ -489,7 +490,7 @@
 .action-picker {
   margin-left: auto;
   font-size: 12px;
-  font-weight: 600;
+  font-weight: 400;
   color: #495057;
   display: flex;
   align-items: center;
@@ -504,13 +505,13 @@
 }
 
 .feed-save-btn {
-  background: #212529;
+  background: #191919;
   color: white;
   border: none;
-  padding: 6px 16px;
-  border-radius: 8px;
+  padding: 8px 20px;
+  border-radius: 29px;
   font-size: 13px;
-  font-weight: 700;
+  font-weight: 400;
   cursor: pointer;
 }
 
@@ -518,8 +519,10 @@
   background: none;
   border: none;
   color: #ADB5BD;
+  border-radius: 29px;
+  padding: 8px 16px;
   font-size: 13px;
-  font-weight: 600;
+  font-weight: 400;
   cursor: pointer;
 }
 
@@ -547,7 +550,7 @@
 
 .p-title {
   font-size: 13px;
-  font-weight: 700;
+  font-weight: 400;
   color: #212529;
 }
 
@@ -576,7 +579,7 @@
 
 .feed-item-header {
   font-size: 13px;
-  font-weight: 700;
+  font-weight: 400;
   margin-bottom: 12px;
 }
 
@@ -604,7 +607,7 @@
 
 .feed-text {
   font-size: 13px;
-  font-weight: 500;
+  font-weight: 400;
   color: #212529;
 }
 
@@ -618,10 +621,10 @@
 .retry-btn {
   background: white;
   border: 1px solid #DEE2E6;
-  padding: 4px 12px;
-  border-radius: 8px;
+  padding: 5px 14px;
+  border-radius: 29px;
   font-size: 12px;
-  font-weight: 600;
+  font-weight: 400;
   color: #495057;
   cursor: pointer;
 }
@@ -648,24 +651,24 @@
 }
 
 .add-products-black-btn {
-  background: #212529;
+  background: #191919;
   color: white;
   border: none;
-  padding: 10px 20px;
-  border-radius: 20px;
-  font-weight: 700;
+  padding: 10px 22px;
+  border-radius: 29px;
+  font-weight: 400;
   font-size: 13px;
   cursor: pointer;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 12px rgba(25, 25, 25, 0.2);
 }
 
 .select-product-white-btn {
   background: white;
-  color: #212529;
+  color: #191919;
   border: 1px solid #DEE2E6;
-  padding: 10px 20px;
-  border-radius: 20px;
-  font-weight: 700;
+  padding: 10px 22px;
+  border-radius: 29px;
+  font-weight: 400;
   font-size: 13px;
   cursor: pointer;
 }
@@ -687,7 +690,7 @@
   border-bottom: 1px solid #F1F3F5;
   align-items: center;
   font-size: 11px;
-  font-weight: 700;
+  font-weight: 400;
   color: #ADB5BD;
   text-transform: uppercase;
   letter-spacing: 0.5px;
@@ -706,7 +709,7 @@
 }
 
 .col-drag { color: #DEE2E6; cursor: grab; display: flex; justify-content: center; }
-.col-index { font-size: 13px; color: #ADB5BD; font-weight: 700; }
+.col-index { font-size: 13px; color: #ADB5BD; font-weight: 400; }
 
 .product-search-input {
   position: relative;
@@ -722,7 +725,7 @@
   border-radius: 8px;
   font-size: 13px;
   color: #339AF0;
-  font-weight: 500;
+  font-weight: 400;
 }
 
 .product-search-input .search-icon {
@@ -745,7 +748,7 @@
   border-radius: 8px;
   font-size: 13px;
   text-align: right;
-  font-weight: 600;
+  font-weight: 400;
   color: #212529;
 }
 
@@ -781,7 +784,7 @@
   display: flex;
   justify-content: space-between;
   font-size: 12px;
-  font-weight: 600;
+  font-weight: 400;
   color: #495057;
 }
 
@@ -797,7 +800,7 @@
   padding-top: 16px;
   border-top: 1px solid #F1F3F5;
   font-size: 18px;
-  font-weight: 800;
+  font-weight: 400;
   color: #212529;
 }
 
@@ -813,3 +816,282 @@
   justify-content: center;
   color: #ADB5BD;
 }
+
+/* Sold Banner and Timing Styles in DealModal */
+.deal-sold-highlight-banner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  color: #ffffff;
+  padding: 14px 18px;
+  border-radius: 14px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 16px rgba(16, 185, 129, 0.25);
+}
+
+.deal-sold-banner-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.trophy-badge {
+  font-size: 26px;
+}
+
+.deal-sold-banner-title {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.deal-sold-banner-sub {
+  margin: 2px 0 0 0;
+  font-size: 12.5px;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.deal-sold-banner-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px;
+}
+
+.sold-time-label {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.sold-time-duration {
+  font-size: 16px;
+  font-weight: 800;
+  color: #ffffff;
+  background: rgba(0, 0, 0, 0.2);
+  padding: 4px 10px;
+  border-radius: 8px;
+}
+
+.deal-progress-banner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  padding: 10px 16px;
+  border-radius: 12px;
+  margin-bottom: 20px;
+}
+
+.deal-progress-timing {
+  display: flex;
+  gap: 16px;
+  font-size: 12.5px;
+  color: #475569;
+}
+
+.mark-as-sold-action-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  color: #ffffff;
+  border: none;
+  padding: 7px 14px;
+  border-radius: 8px;
+  font-size: 12.5px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
+  transition: all 0.2s;
+}
+
+.mark-as-sold-action-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
+}
+
+/* Modal History Tab View */
+.deal-history-tab-view {
+  flex: 1;
+  padding: 24px;
+  overflow-y: auto;
+  background: #ffffff;
+}
+
+.deal-history-stats-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.deal-kpi-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px;
+  border-radius: 14px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+}
+
+.deal-kpi-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  flex-shrink: 0;
+}
+
+.deal-kpi-card.stage .deal-kpi-icon {
+  background: rgba(0, 43, 255, 0.1);
+  color: #002BFF;
+}
+
+.deal-kpi-card.total .deal-kpi-icon {
+  background: rgba(174, 0, 255, 0.1);
+  color: #AE00FF;
+}
+
+.deal-kpi-card.sale .deal-kpi-icon {
+  background: rgba(16, 185, 129, 0.1);
+  color: #10B981;
+}
+
+.deal-kpi-label {
+  display: block;
+  font-size: 11.5px;
+  color: #64748b;
+  font-weight: 500;
+}
+
+.deal-kpi-val {
+  display: block;
+  font-size: 17px;
+  font-weight: 700;
+  color: #0f172a;
+  margin-top: 2px;
+}
+
+.deal-timeline-header-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 16px;
+  font-weight: 700;
+  color: #1e293b;
+  margin: 0 0 16px 0;
+}
+
+.deal-timeline-items {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  position: relative;
+  padding-left: 20px;
+  border-left: 2px solid #e2e8f0;
+  margin-left: 10px;
+}
+
+.deal-timeline-entry {
+  position: relative;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 14px 18px;
+  transition: all 0.2s;
+}
+
+.deal-timeline-entry::before {
+  content: '';
+  position: absolute;
+  left: -27px;
+  top: 18px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #002BFF;
+  border: 2px solid #ffffff;
+  box-shadow: 0 0 0 3px rgba(0, 43, 255, 0.2);
+}
+
+.deal-timeline-entry.is-sale-entry {
+  border-color: rgba(16, 185, 129, 0.4);
+  background: #f0fdf4;
+}
+
+.deal-timeline-entry.is-sale-entry::before {
+  background: #10B981;
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.3);
+}
+
+.entry-top-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.entry-columns {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 700;
+  color: #1e293b;
+}
+
+.entry-from-col {
+  color: #64748b;
+}
+
+.entry-to-col {
+  color: #002BFF;
+}
+
+.entry-time-badge {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  padding: 3px 9px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #334155;
+}
+
+.entry-meta-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  font-size: 12px;
+  color: #64748b;
+}
+
+.entry-meta-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.entry-meta-item strong {
+  color: #1e293b;
+}
+
+.entry-sale-celebration {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px dashed rgba(16, 185, 129, 0.3);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #059669;
+  font-size: 12.5px;
+  font-weight: 700;
+}
+

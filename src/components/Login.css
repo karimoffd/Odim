@@ -148,8 +148,10 @@
 .login-top-row {
   width: 100%;
   display: flex;
-  justify-content: flex-end;
-  margin-bottom: 10px;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  gap: 10px;
 }
 
 .lang-container-wrapper {
@@ -162,9 +164,9 @@
   gap: 8px;
   padding: 8px 16px;
   border: 1px solid var(--midnight-veil);
-  border-radius: 40px;
+  border-radius: 29px;
   font-size: 14px;
-  font-weight: 600;
+  font-weight: 400;
   color: var(--deep-obsidian);
   background: var(--frost-white);
   cursor: pointer;
@@ -219,7 +221,7 @@
   background: none;
   border-radius: 30px;
   font-size: 13px;
-  font-weight: 500;
+  font-weight: 400;
   color: var(--midnight-veil);
   cursor: pointer;
   text-align: center;
@@ -234,7 +236,7 @@
 .lang-option.active {
   background: rgba(25, 25, 25, 0.1);
   color: var(--deep-obsidian);
-  font-weight: 600;
+  font-weight: 400;
 }
 
 .login-icon-circle {
@@ -252,7 +254,7 @@
 
 .login-title {
   font-size: 28px;
-  font-weight: 700;
+  font-weight: 400;
   color: var(--deep-obsidian);
   margin-bottom: 8px;
   animation: fade-in-up 0.8s ease-out 0.2s both;
@@ -297,21 +299,23 @@
 }
 
 .login-input {
-  width: 100%;
-  padding: 16px 16px 16px 48px;
-  background: var(--frost-white);
-  border: 1px solid var(--midnight-veil);
-  border-radius: 40px;
-  font-size: 15px;
-  color: var(--deep-obsidian);
-  outline: none;
+  width: 100% !important;
+  height: 52px !important;
+  padding: 0 16px 0 48px !important;
+  background: var(--frost-white) !important;
+  border: 1px solid var(--midnight-veil) !important;
+  border-radius: 29px !important;
+  font-size: 15px !important;
+  color: var(--deep-obsidian) !important;
+  outline: none !important;
   transition: all 0.2s;
+  box-sizing: border-box !important;
 }
 
 .login-input:focus {
-  background: var(--frost-white);
-  border-color: var(--deep-obsidian);
-  box-shadow: 0 0 0 4px var(--celestial-blue);
+  background: var(--frost-white) !important;
+  border-color: var(--deep-obsidian) !important;
+  box-shadow: 0 0 0 4px var(--celestial-blue) !important;
 }
 
 .forgot-password {
@@ -322,7 +326,7 @@
   text-decoration: none;
   margin-bottom: 18px;
   margin-top: -8px;
-  font-weight: 500;
+  font-weight: 400;
 }
 
 .forgot-password:hover {
@@ -335,7 +339,7 @@
   background: var(--deep-obsidian);
   color: var(--frost-white);
   border: none;
-  border-radius: 40px;
+  border-radius: 29px;
   font-size: 16px;
   cursor: pointer;
   transition: all 0.2s;
@@ -377,13 +381,13 @@
   padding: 16px;
   background: var(--frost-white);
   border: 1px solid var(--midnight-veil);
-  border-radius: 40px;
+  border-radius: 29px;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 10px;
   font-size: 15px;
-  font-weight: 500;
+  font-weight: 400;
   color: var(--deep-obsidian);
   cursor: pointer;
   transition: all 0.2s;
@@ -395,16 +399,169 @@
   border-color: var(--deep-obsidian);
 }
 
-.signup-text {
-  font-size: 14px;
-  color: var(--midnight-veil);
-  margin-bottom: 32px;
+.auth-tab-switch {
+  display: inline-flex;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(25, 25, 25, 0.1);
+  border-radius: 30px;
+  padding: 3px;
+  gap: 3px;
 }
 
-.signup-link {
+.auth-tab-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border-radius: 20px;
+  border: none;
+  background: transparent;
+  color: var(--midnight-veil);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.auth-tab-btn:hover {
   color: var(--deep-obsidian);
-  text-decoration: none;
+}
+
+.auth-tab-btn.active {
+  background: var(--deep-obsidian);
+  color: #ffffff;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
+}
+
+.register-card {
+  max-width: 520px;
+  padding: 34px 38px;
+}
+
+.input-row-2col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+@media (max-width: 520px) {
+  .input-row-2col {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+  .register-card {
+    padding: 24px 20px;
+  }
+  .login-top-row {
+    flex-direction: column-reverse;
+    align-items: flex-end;
+  }
+}
+
+.password-toggle-btn {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: var(--midnight-veil);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+  transition: color 0.15s;
+}
+
+.password-toggle-btn:hover {
+  color: var(--deep-obsidian);
+}
+
+.login-select {
+  appearance: none;
+  cursor: pointer;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2364748b'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 16px center;
+  background-size: 16px;
+  padding-right: 42px !important;
+}
+
+.auth-alert {
+  width: 100%;
+  padding: 10px 14px;
+  border-radius: 14px;
+  font-size: 13px;
+  font-weight: 400;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+  text-align: left;
+  animation: fade-in-up 0.3s ease-out;
+}
+
+.error-alert {
+  background: #fee2e2;
+  border: 1px solid #fca5a5;
+  color: #991b1b;
+}
+
+.success-alert {
+  background: #dcfce7;
+  border: 1px solid #86efac;
+  color: #166534;
+}
+
+.btn-spinner-content {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.spin-circle {
+  width: 15px;
+  height: 15px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top-color: #ffffff;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.auth-switch-text {
+  font-size: 14px;
+  color: var(--midnight-veil);
+  text-align: center;
+  margin-top: -6px;
+  margin-bottom: 22px;
+}
+
+.auth-link-btn {
+  background: none;
+  border: none;
+  color: var(--deep-obsidian);
   font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  padding: 0;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: opacity 0.15s;
+}
+
+.auth-link-btn:hover {
+  opacity: 0.8;
+}
+
+.register-form-animate {
+  animation: fade-in-up 0.35s ease-out;
 }
 
 .footer-logo-container {

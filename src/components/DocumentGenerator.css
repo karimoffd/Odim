@@ -1,0 +1,466 @@
+.doc-page-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 1.5rem;
+  gap: 1.25rem;
+  background-color: #ECF0FB;
+  overflow-y: auto;
+  position: relative;
+  font-family: 'Golos Text', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+.doc-toast {
+  position: fixed;
+  top: 1.5rem;
+  right: 2rem;
+  background: #0f172a;
+  color: #ffffff;
+  padding: 0.75rem 1.25rem;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  animation: slideInToast 0.25s ease-out;
+}
+
+/* TOP CONTROLS */
+.doc-top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.doc-type-pills {
+  display: flex;
+  background: #ffffff;
+  padding: 0.35rem;
+  border-radius: 50px;
+  border: 1.5px solid #e2e8f0;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+  height: 48px;
+  box-sizing: border-box;
+}
+
+.dt-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0 1.25rem;
+  height: 100%;
+  border: none;
+  background: transparent;
+  color: #64748b;
+  font-size: 0.875rem;
+  font-weight: 500;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.dt-btn.active {
+  background: #191919;
+  color: #ffffff;
+  box-shadow: 0 4px 14px rgba(25, 25, 25, 0.24);
+  font-weight: 600;
+}
+
+.dt-btn:hover:not(.active) {
+  color: #0f172a;
+  background: #f1f5f9;
+}
+
+.doc-actions-row {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.doc-action-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0 1.35rem;
+  height: 48px;
+  box-sizing: border-box;
+  border-radius: 50px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.doc-action-btn.secondary {
+  background: #ffffff;
+  border: 1.5px solid #e2e8f0;
+  color: #334155;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+}
+
+.doc-action-btn.secondary:hover {
+  background: #f1f5f9;
+  border-color: #cbd5e1;
+}
+
+.doc-action-btn.primary {
+  background: #191919;
+  color: #ffffff;
+  border: none;
+  box-shadow: 0 4px 14px rgba(25, 25, 25, 0.22);
+}
+
+.doc-action-btn.primary:hover {
+  background: #2d3748;
+}
+
+.doc-action-btn.primary:hover {
+  background: #1d4ed8;
+}
+
+/* LAYOUT GRID */
+.doc-layout-grid {
+  display: grid;
+  grid-template-columns: 340px 1fr;
+  gap: 1.5rem;
+  flex: 1;
+  min-height: 0;
+}
+
+@media (max-width: 1024px) {
+  .doc-layout-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* CONFIG CARD */
+.doc-config-card {
+  background: #ffffff;
+  border-radius: 16px;
+  border: 1px solid #e2e8f0;
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.03);
+  height: fit-content;
+}
+
+.dcc-title {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.dcc-subtitle {
+  margin: 0;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #64748b;
+}
+
+.dcc-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  flex: 1;
+  min-width: 0;
+}
+
+.dcc-field label {
+  font-size: 0.775rem;
+  font-weight: 500;
+  color: #475569;
+}
+
+.dcc-field input,
+.dcc-field select {
+  padding: 0.55rem 0.75rem;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  outline: none;
+  font-family: inherit;
+  background: #ffffff;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.dcc-row {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.dcc-divider {
+  height: 1px;
+  background: #f1f5f9;
+  margin: 0.25rem 0;
+}
+
+.dcc-info-box {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.dib-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.775rem;
+}
+
+.dib-lbl {
+  color: #64748b;
+}
+
+.dib-val {
+  font-weight: 600;
+  color: #1e293b;
+  text-align: right;
+}
+
+/* PREVIEW WRAPPER */
+.doc-preview-wrapper {
+  display: flex;
+  justify-content: center;
+  overflow-y: auto;
+  padding-bottom: 2rem;
+}
+
+.a4-sheet {
+  width: 100%;
+  max-width: 780px;
+  background: #ffffff;
+  border-radius: 12px;
+  border: 1px solid #cbd5e1;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.08);
+  padding: 2.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  color: #0f172a;
+}
+
+.sheet-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.sheet-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.sheet-logo-mark {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: #191919;
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 1.4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.brand-name {
+  margin: 0;
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: #0f172a;
+}
+
+.brand-tagline {
+  font-size: 0.75rem;
+  color: #64748b;
+}
+
+.sheet-doc-meta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.2rem;
+}
+
+.sd-badge {
+  background: #f1f5f9;
+  color: #191919;
+  font-weight: 600;
+  font-size: 0.8rem;
+  padding: 0.25rem 0.75rem;
+  border-radius: 29px;
+  letter-spacing: 0.05em;
+}
+
+.sd-no {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #334155;
+}
+
+.sd-date {
+  font-size: 0.75rem;
+  color: #64748b;
+}
+
+.sheet-divider {
+  height: 2px;
+  background: #0f172a;
+}
+
+.sheet-parties-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  background: #f8fafc;
+  padding: 1rem 1.25rem;
+  border-radius: 8px;
+}
+
+.sp-col {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  font-size: 0.8rem;
+}
+
+.sp-label {
+  font-size: 0.7rem;
+  font-weight: 500;
+  color: #64748b;
+  letter-spacing: 0.04em;
+  margin-bottom: 0.2rem;
+}
+
+.sp-name {
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: #0f172a;
+}
+
+.sp-detail {
+  color: #475569;
+}
+
+.sheet-intro-text {
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: #334155;
+}
+
+.sheet-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.825rem;
+}
+
+.sheet-table th {
+  background: #f1f5f9;
+  border: 1px solid #cbd5e1;
+  padding: 0.5rem 0.75rem;
+  font-weight: 600;
+  color: #334155;
+}
+
+.sheet-table td {
+  border: 1px solid #cbd5e1;
+  padding: 0.6rem 0.75rem;
+}
+
+.sheet-total-box {
+  align-self: flex-end;
+  width: 320px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  background: #f8fafc;
+  padding: 0.875rem 1rem;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+}
+
+.st-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.825rem;
+  color: #475569;
+}
+
+.st-row.grand-total {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #0f172a;
+  border-top: 1px solid #cbd5e1;
+  padding-top: 0.4rem;
+  margin-top: 0.2rem;
+}
+
+.sheet-signatures {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  margin-top: 1.5rem;
+}
+
+.sign-col {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.sign-title {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #334155;
+}
+
+.sign-line {
+  height: 1px;
+  background: #94a3b8;
+  margin: 2.5rem 0 0.5rem;
+}
+
+.sign-name {
+  font-size: 0.825rem;
+  font-weight: 600;
+}
+
+.sign-seal {
+  font-size: 0.725rem;
+  color: #94a3b8;
+}
+
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  .a4-sheet, .a4-sheet * {
+    visibility: visible;
+  }
+  .a4-sheet {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    max-width: 100%;
+    border: none;
+    box-shadow: none;
+    padding: 0;
+  }
+}

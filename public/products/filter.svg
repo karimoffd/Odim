@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100">
+  <defs>
+    <linearGradient id="filterBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e293b"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+    <linearGradient id="filterCan" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#166534"/>
+      <stop offset="35%" stop-color="#22c55e"/>
+      <stop offset="70%" stop-color="#15803d"/>
+      <stop offset="100%" stop-color="#14532d"/>
+    </linearGradient>
+  </defs>
+  <rect width="100" height="100" rx="26" fill="url(#filterBg)"/>
+  <!-- Filter canister -->
+  <rect x="30" y="30" width="40" height="46" rx="8" fill="url(#filterCan)"/>
+  <!-- Top rim -->
+  <ellipse cx="50" cy="30" rx="20" ry="6" fill="#475569"/>
+  <ellipse cx="50" cy="30" rx="12" ry="3.5" fill="#0f172a"/>
+  <!-- Label stripe -->
+  <rect x="30" y="46" width="40" height="14" fill="#facc15"/>
+  <text x="50" y="56" font-size="7" font-weight="900" font-family="sans-serif" text-anchor="middle" fill="#000000">MANN</text>
+  <!-- Grip flutes -->
+  <line x1="36" y1="64" x2="36" y2="72" stroke="#14532d" stroke-width="2" stroke-linecap="round"/>
+  <line x1="43" y1="64" x2="43" y2="72" stroke="#14532d" stroke-width="2" stroke-linecap="round"/>
+  <line x1="50" y1="64" x2="50" y2="72" stroke="#14532d" stroke-width="2" stroke-linecap="round"/>
+  <line x1="57" y1="64" x2="57" y2="72" stroke="#14532d" stroke-width="2" stroke-linecap="round"/>
+  <line x1="64" y1="64" x2="64" y2="72" stroke="#14532d" stroke-width="2" stroke-linecap="round"/>
+</svg>

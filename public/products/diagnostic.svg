@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100">
+  <defs>
+    <linearGradient id="diagBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0284c7"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+  </defs>
+  <rect width="100" height="100" rx="26" fill="url(#diagBg)"/>
+  <!-- Scanner Device -->
+  <rect x="26" y="22" width="48" height="56" rx="8" fill="#1e293b" stroke="#38bdf8" stroke-width="2"/>
+  <!-- Screen -->
+  <rect x="32" y="28" width="36" height="26" rx="4" fill="#000000"/>
+  <!-- Wave / pulse line -->
+  <path d="M36 41 L42 41 L45 34 L49 48 L53 38 L56 41 L64 41" fill="none" stroke="#22c55e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Buttons on device -->
+  <circle cx="38" cy="64" r="3" fill="#38bdf8"/>
+  <circle cx="50" cy="64" r="3" fill="#38bdf8"/>
+  <circle cx="62" cy="64" r="3" fill="#38bdf8"/>
+  <rect x="42" y="70" width="16" height="4" rx="2" fill="#ef4444"/>
+</svg>
