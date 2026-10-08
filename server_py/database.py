@@ -6,7 +6,7 @@ from typing import Dict, Any, List, Optional
 DB_FILE = os.path.join(os.path.dirname(__file__), "odim_crm.db")
 
 def get_db_connection():
-    conn = sqlite3.connect(DB_FILE)
+    conn = sqlite3.connect(DB_FILE, timeout=30.0, check_same_thread=False)
     conn.row_factory = sqlite3.Row
     return conn
 
@@ -311,6 +311,33 @@ def init_db():
         config_data TEXT DEFAULT '{}',
         last_sync TIMESTAMP,
         updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    )
+    ''')
+
+    # 14. Temporary Meta Discovery Sessions (Powers Account Selection Modal)
+    cursor.execute('''
+    CREATE TABLE IF NOT EXISTS temp_meta_sessions (
+        id TEXT PRIMARY KEY,
+        user_id TEXT NOT NULL,
+        organization_id TEXT NOT NULL,
+        user_access_token TEXT NOT NULL,
+        discovered_payload TEXT NOT NULL,
+        expires_at TIMESTAMP NOT NULL,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    )
+    ''')
+
+    # 15. OAuth CSRF States Table
+    cursor.execute('''
+    CREATE TABLE IF NOT EXISTS oauth_states (
+        id TEXT PRIMARY KEY,
+        state TEXT UNIQUE NOT NULL,
+        user_id TEXT NOT NULL,
+        organization_id TEXT NOT NULL,
+        platform TEXT DEFAULT 'meta',
+        expires_at TIMESTAMP NOT NULL,
+        used INTEGER DEFAULT 0,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     )
     ''')
 
@@ -629,7 +656,7 @@ def ensure_sold_deals_and_audit(cursor, conn):
             """, h)
         conn.commit()
 
-    # Seed default integrations
+    # Seed default integrations (initially disconnected and clean)
     cursor.execute("SELECT COUNT(*) FROM integrations")
     if cursor.fetchone()[0] == 0:
         initial_integrations = [
@@ -637,52 +664,28 @@ def ensure_sold_deals_and_audit(cursor, conn):
                 "telegram",
                 "telegram",
                 "Telegram Bot & Kanallar",
-                1,
-                "connected",
-                json.dumps({
-                    "bot_token": "8862096129:AAElvj7naYtnhehF66GgFBua_12tngCbd34",
-                    "bot_username": "@odim_crm_bot",
-                    "auto_lead": True,
-                    "target_column": "col-1",
-                    "sync_messages": True,
-                    "webhook_url": "https://coupled-musical-taste-zoloft.trycloudflare.com/api/telegram/webhook"
-                }),
-                "2026-09-25 11:30:00"
+                0,
+                "disconnected",
+                "{}",
+                None
             ),
             (
                 "instagram",
                 "instagram",
                 "Instagram Direct & Izohlar",
-                1,
-                "connected",
-                json.dumps({
-                    "account_username": "@odim.uz",
-                    "account_id": "17841400234567890",
-                    "page_name": "Odim CRM Rasmiy",
-                    "sync_dms": True,
-                    "sync_comments": True,
-                    "auto_lead": True,
-                    "webhook_url": "https://coupled-musical-taste-zoloft.trycloudflare.com/api/instagram/webhook",
-                    "verify_token": "odim_insta_secret_token_2026"
-                }),
-                "2026-09-25 11:15:00"
+                0,
+                "disconnected",
+                "{}",
+                None
             ),
             (
                 "facebook",
                 "facebook",
                 "Facebook Messenger & Leads",
-                1,
-                "connected",
-                json.dumps({
-                    "page_name": "Odim Technologies",
-                    "page_id": "104928174829102",
-                    "sync_messenger": True,
-                    "lead_ads_sync": True,
-                    "auto_lead": True,
-                    "webhook_url": "https://coupled-musical-taste-zoloft.trycloudflare.com/api/facebook/webhook",
-                    "verify_token": "odim_fb_secret_token_2026"
-                }),
-                "2026-09-25 10:45:00"
+                0,
+                "disconnected",
+                "{}",
+                None
             ),
             (
                 "whatsapp",
@@ -690,13 +693,7 @@ def ensure_sold_deals_and_audit(cursor, conn):
                 "WhatsApp Business API",
                 0,
                 "disconnected",
-                json.dumps({
-                    "phone_number_id": "",
-                    "waba_id": "",
-                    "access_token": "",
-                    "sync_messages": False,
-                    "webhook_url": "https://coupled-musical-taste-zoloft.trycloudflare.com/api/whatsapp/webhook"
-                }),
+                "{}",
                 None
             )
         ]

@@ -1,0 +1,635 @@
+/* ─────────────────────────────────────────────────────────────
+   ODIM CRM — INTEGRATION MODALS STYLING (Aesthetic Glassmorphism)
+   ───────────────────────────────────────────────────────────── */
+
+.odim-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(10, 15, 29, 0.75);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  animation: odimFadeIn 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes odimFadeIn {
+  from { opacity: 0; transform: scale(0.98); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.odim-selector-modal,
+.odim-telegram-modal,
+.odim-guide-modal {
+  background: #ffffff;
+  border-radius: 20px;
+  width: 100%;
+  max-width: 580px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  padding: 24px;
+  position: relative;
+}
+
+:root[data-theme='dark'] .odim-selector-modal,
+:root[data-theme='dark'] .odim-telegram-modal,
+:root[data-theme='dark'] .odim-guide-modal,
+body.dark-mode .odim-selector-modal,
+body.dark-mode .odim-telegram-modal,
+body.dark-mode .odim-guide-modal {
+  background: #111827;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #f9fafb;
+}
+
+/* Modal Headers */
+.selector-modal-header,
+.tg-modal-header,
+.guide-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.selector-brand-badges {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.badge-fb {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(24, 119, 242, 0.1);
+  color: #1877f2;
+  padding: 4px 10px;
+  border-radius: 99px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.badge-ig {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(225, 48, 108, 0.1);
+  color: #e1306c;
+  padding: 4px 10px;
+  border-radius: 99px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.badge-sep {
+  color: #9ca3af;
+  font-weight: 700;
+}
+
+.modal-close-x {
+  background: transparent;
+  border: none;
+  color: #6b7280;
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s;
+}
+
+.modal-close-x:hover {
+  background: rgba(0, 0, 0, 0.05);
+  color: #111827;
+}
+
+.selector-modal-title h3,
+.tg-step-content h4,
+.guide-title-box h3 {
+  font-size: 19px;
+  font-weight: 700;
+  margin: 0 0 6px 0;
+  color: #111827;
+}
+
+:root[data-theme='dark'] .selector-modal-title h3,
+:root[data-theme='dark'] .tg-step-content h4,
+:root[data-theme='dark'] .guide-title-box h3 {
+  color: #f9fafb;
+}
+
+.selector-modal-title p,
+.tg-step-desc,
+.guide-intro {
+  font-size: 13.5px;
+  color: #6b7280;
+  margin: 0 0 16px 0;
+  line-height: 1.5;
+}
+
+/* Error Banner */
+.selector-modal-error {
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  color: #b91c1c;
+  padding: 10px 14px;
+  border-radius: 12px;
+  font-size: 13.5px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+/* Loading Box */
+.selector-modal-loading {
+  padding: 36px 16px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  color: #6b7280;
+  font-size: 14px;
+}
+
+/* Pages Selection List */
+.selector-pages-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-height: 240px;
+  overflow-y: auto;
+  margin-bottom: 18px;
+  padding-right: 4px;
+}
+
+.page-select-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 14px;
+  border-radius: 14px;
+  border: 1.5px solid #e5e7eb;
+  background: #f9fafb;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+:root[data-theme='dark'] .page-select-card {
+  background: #1f2937;
+  border-color: #374151;
+}
+
+.page-select-card:hover {
+  border-color: #93c5fd;
+  background: #f0f7ff;
+}
+
+.page-select-card.is-selected {
+  border-color: #002bff;
+  background: #eff6ff;
+  box-shadow: 0 0 0 2px rgba(0, 43, 255, 0.15);
+}
+
+:root[data-theme='dark'] .page-select-card.is-selected {
+  border-color: #3b82f6;
+  background: rgba(59, 130, 246, 0.1);
+}
+
+.page-select-card input[type="radio"] {
+  accent-color: #002bff;
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+}
+
+.page-card-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #e5e7eb;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.page-card-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.page-card-meta {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.page-card-name-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.page-card-name-row h4 {
+  margin: 0;
+  font-size: 14.5px;
+  font-weight: 600;
+  color: #111827;
+}
+
+:root[data-theme='dark'] .page-card-name-row h4 {
+  color: #f9fafb;
+}
+
+.page-cat-tag {
+  font-size: 11.5px;
+  color: #6b7280;
+  background: rgba(0, 0, 0, 0.05);
+  padding: 2px 7px;
+  border-radius: 6px;
+}
+
+.linked-ig-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 12px;
+  color: #e1306c;
+  font-weight: 500;
+}
+
+.unlinked-ig-pill {
+  font-size: 11.5px;
+  color: #9ca3af;
+}
+
+/* Toggles Box */
+.selector-toggles-box {
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+:root[data-theme='dark'] .selector-toggles-box {
+  background: #1f2937;
+  border-color: #374151;
+}
+
+.selector-toggle-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  cursor: pointer;
+}
+
+.selector-toggle-item input[type="checkbox"] {
+  accent-color: #002bff;
+  width: 17px;
+  height: 17px;
+  margin-top: 2px;
+}
+
+.selector-toggle-item strong {
+  display: block;
+  font-size: 13.5px;
+  color: #1f2937;
+}
+
+:root[data-theme='dark'] .selector-toggle-item strong {
+  color: #f3f4f6;
+}
+
+.selector-toggle-item small {
+  display: block;
+  font-size: 12px;
+  color: #6b7280;
+}
+
+.selector-security-note {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 12px;
+  color: #059669;
+  margin-bottom: 18px;
+}
+
+/* Modal Actions */
+.selector-modal-actions,
+.tg-footer-actions,
+.guide-modal-footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: auto;
+}
+
+.odim-btn-cancel {
+  background: #f3f4f6;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #4b5563;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.odim-btn-cancel:hover {
+  background: #e5e7eb;
+  color: #111827;
+}
+
+.odim-btn-confirm {
+  background: #002bff;
+  color: #ffffff;
+  border: none;
+  padding: 10px 22px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.15s;
+  box-shadow: 0 4px 12px rgba(0, 43, 255, 0.25);
+}
+
+.odim-btn-confirm:hover:not(:disabled) {
+  background: #0022cc;
+  box-shadow: 0 6px 16px rgba(0, 43, 255, 0.35);
+}
+
+.odim-btn-confirm:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Telegram Stepper */
+.tg-brand-badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  font-size: 16px;
+  color: #0088cc;
+}
+
+.tg-wizard-steps-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 20px;
+  padding: 10px 0;
+}
+
+.step-node {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  opacity: 0.5;
+}
+
+.step-node.active {
+  opacity: 1;
+}
+
+.step-num {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: #e5e7eb;
+  color: #4b5563;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.step-node.active .step-num {
+  background: #0088cc;
+  color: #ffffff;
+}
+
+.step-lbl {
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.step-line {
+  width: 32px;
+  height: 2px;
+  background: #e5e7eb;
+}
+
+.step-line.active {
+  background: #0088cc;
+}
+
+.tg-input-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin-bottom: 18px;
+}
+
+.tg-modal-input {
+  width: 100%;
+  padding: 12px 42px 12px 14px;
+  border-radius: 12px;
+  border: 1.5px solid #d1d5db;
+  font-size: 14.5px;
+  outline: none;
+  background: #f9fafb;
+  color: #111827;
+  transition: border-color 0.15s;
+}
+
+:root[data-theme='dark'] .tg-modal-input {
+  background: #1f2937;
+  border-color: #374151;
+  color: #f9fafb;
+}
+
+.tg-modal-input:focus {
+  border-color: #0088cc;
+  box-shadow: 0 0 0 3px rgba(0, 136, 204, 0.15);
+}
+
+.tg-eye-btn {
+  position: absolute;
+  right: 12px;
+  background: none;
+  border: none;
+  color: #6b7280;
+  cursor: pointer;
+}
+
+.tg-instructions-box {
+  background: #f0f9ff;
+  border: 1px solid #bae6fd;
+  border-radius: 12px;
+  padding: 12px 14px;
+  font-size: 13px;
+  color: #0369a1;
+  margin-bottom: 14px;
+  line-height: 1.5;
+}
+
+.tg-field-label {
+  display: block;
+  font-size: 13.5px;
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: #374151;
+}
+
+:root[data-theme='dark'] .tg-field-label {
+  color: #e5e7eb;
+}
+
+.tg-verified-bot-banner {
+  background: #ecfdf5;
+  border: 1px solid #a7f3d0;
+  color: #065f46;
+  padding: 10px 14px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13.5px;
+  margin-bottom: 14px;
+}
+
+.tg-success-summary-box {
+  text-align: center;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.tg-success-circle {
+  width: 56px;
+  height: 56px;
+  background: #ecfdf5;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 4px;
+}
+
+.tg-rights-badges {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 8px;
+}
+
+.tg-right-badge {
+  background: #f3f4f6;
+  padding: 4px 10px;
+  border-radius: 99px;
+  font-size: 12px;
+  color: #374151;
+}
+
+.tg-right-badge.active {
+  background: #ecfdf5;
+  color: #047857;
+  font-weight: 500;
+}
+
+/* Guide Cards */
+.guide-step-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.guide-card {
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  padding: 14px;
+  position: relative;
+}
+
+:root[data-theme='dark'] .guide-card {
+  background: #1f2937;
+  border-color: #374151;
+}
+
+.guide-badge {
+  display: inline-block;
+  background: #002bff;
+  color: #ffffff;
+  padding: 2px 8px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.guide-card strong {
+  display: block;
+  font-size: 14.5px;
+  margin-bottom: 4px;
+  color: #111827;
+}
+
+:root[data-theme='dark'] .guide-card strong {
+  color: #f9fafb;
+}
+
+.guide-card p {
+  font-size: 13px;
+  color: #6b7280;
+  margin: 0;
+  line-height: 1.45;
+}
+
+.guide-link-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #1877f2;
+  color: #ffffff;
+  padding: 8px 14px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 600;
+  margin-top: 10px;
+  transition: opacity 0.15s;
+}
+
+.guide-link-btn:hover {
+  opacity: 0.9;
+}

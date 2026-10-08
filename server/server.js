@@ -51,6 +51,14 @@ app.get('/api/call-status/:chatId', (req, res) => {
   res.json({ status });
 });
 
+// Forward Meta / Instagram OAuth callback to FastAPI backend (port 8000)
+app.get(['/api/integrations/instagram/callback', '/api/integrations/meta/callback'], (req, res) => {
+  const query = new URLSearchParams(req.query).toString();
+  const targetUrl = `http://localhost:8000/api/integrations/instagram/callback${query ? '?' + query : ''}`;
+  console.log(`[Meta OAuth] Redirecting callback to FastAPI: ${targetUrl}`);
+  res.redirect(targetUrl);
+});
+
 // Real Telephony / Outbound Call API endpoint
 app.post('/api/telephony/call', async (req, res) => {
   const { to, from, twilioSid, twilioToken } = req.body;
@@ -343,17 +351,14 @@ const io = new Server(server, {
   cors: { origin: "*", methods: ["GET", "POST"] }
 });
 
-const TELEGRAM_TOKEN = '8862096129:AAElvj7naYtnhehF66GgFBua_12tngCbd34';
+const TELEGRAM_TOKEN = process.env.TELEGRAM_BOT_TOKEN || '8862096129:AAElvj7naYtnhehF66GgFBua_12tngCbd34';
 const bot = new TelegramBot(TELEGRAM_TOKEN, { 
-  polling: true,
+  polling: Boolean(process.env.TELEGRAM_BOT_TOKEN),
   request: { agentOptions: { family: 4 } }
 });
 
-bot.on('polling_error', (error) => {
-  // Graceful polling retry without crashing
-  if (error && error.code !== 'EFATAL') {
-    console.warn('[Telegram Polling]:', error.code || error.message);
-  }
+bot.on('polling_error', () => {
+  // Silent when bot token is not configured or offline
 });
 
 io.on('connection', (socket) => {

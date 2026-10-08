@@ -1207,6 +1207,18 @@ export const api = {
     return [];
   },
 
+  async resetIntegrations(): Promise<{ success: boolean; message?: string }> {
+    try {
+      const res = await fetch(`${API_BASE}/integrations/reset`, { method: 'POST' });
+      if (res.ok) {
+        return await res.json();
+      }
+    } catch (e) {
+      console.warn('resetIntegrations error:', e);
+    }
+    return { success: false, message: 'Serverga ulanishda xatolik' };
+  },
+
   async updateIntegration(id: string, data: { name?: string; is_active?: boolean; status?: string; config_data?: Record<string, any> }): Promise<{ success: boolean; message?: string }> {
     try {
       const res = await fetch(`${API_BASE}/integrations/${id}`, {
@@ -1249,6 +1261,213 @@ export const api = {
       console.warn('testIntegration error:', e);
     }
     return { ok: false, message: 'Serverga ulanishda xatolik', latencyMs: 0 };
+  },
+
+  // Telegram 3-Step Guided Wizard APIs
+  async validateTelegramBot(bot_token: string): Promise<{ ok: boolean; message: string; bot?: { id: number; username: string; firstName: string; canJoinGroups?: boolean; canReadAllGroupMessages?: boolean } }> {
+    try {
+      const res = await fetch(`${API_BASE}/integrations/telegram/validate-bot`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ bot_token })
+      });
+      return await res.json();
+    } catch (e) {
+      return { ok: false, message: 'Server bilan aloqa xatosi' };
+    }
+  },
+
+  async verifyTelegramChannel(bot_token: string, channel: string): Promise<{ ok: boolean; message: string; channel?: { id: string; title: string; username: string; type: string; status: string; canPostMessages: boolean; canEditMessages: boolean } }> {
+    try {
+      const res = await fetch(`${API_BASE}/integrations/telegram/verify-channel`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ bot_token, channel })
+      });
+      return await res.json();
+    } catch (e) {
+      return { ok: false, message: 'Server bilan aloqa xatosi' };
+    }
+  },
+
+  async connectTelegram(data: {
+    bot_token: string;
+    bot_username?: string;
+    bot_name?: string;
+    channel_id?: string;
+    channel_username?: string;
+    channel_title?: string;
+    target_column?: string;
+    auto_lead?: boolean;
+    sync_messages?: boolean;
+  }): Promise<{ success: boolean; message: string; config?: any }> {
+    try {
+      const res = await fetch(`${API_BASE}/integrations/telegram/connect`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+      return await res.json();
+    } catch (e) {
+      return { success: false, message: 'Server bilan aloqa xatosi' };
+    }
+  },
+
+  // Universal Meta OAuth & Account Selection Modal APIs
+  async getMetaConnectUrl(platform: string = 'all'): Promise<{ success: boolean; authUrl?: string; state?: string }> {
+    try {
+      const res = await fetch(`${API_BASE}/integrations/meta/connect?platform=${platform}&popup=true`);
+      return await res.json();
+    } catch (e) {
+      return { success: false };
+    }
+  },
+
+  async getMetaDiscoveredAccounts(sessionId: string): Promise<{ success: boolean; pages?: any[]; error?: string }> {
+    try {
+      const res = await fetch(`${API_BASE}/integrations/meta/session/${sessionId}/accounts`);
+      return await res.json();
+    } catch (e) {
+      return { success: false, error: 'Server bilan bog\'lanishda xato' };
+    }
+  },
+
+  async selectMetaAccount(payload: {
+    sessionId: string;
+    selectedPageId: string;
+    connectFacebook: boolean;
+    connectInstagram: boolean;
+    selectedInstagramId?: string;
+  }): Promise<{ success: boolean; message?: string; connectedPage?: string; connectedInstagram?: string; error?: string }> {
+    try {
+      const res = await fetch(`${API_BASE}/integrations/meta/select-account`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      return await res.json();
+    } catch (e) {
+      return { success: false, error: 'Server bilan bog\'lanishda xato' };
+    }
+  },
+
+  async createMetaMockSession(): Promise<{ success: boolean; sessionId?: string; pagesCount?: number }> {
+    try {
+      const res = await fetch(`${API_BASE}/integrations/meta/mock-session`, {
+        method: 'POST'
+      });
+      return await res.json();
+    } catch (e) {
+      return { success: false };
+    }
+  },
+
+  // Instagram Connect & Health
+  async connectInstagram(data: {
+    account_username?: string;
+    account_id?: string;
+    access_token?: string;
+    page_name?: string;
+    page_id?: string;
+    auto_lead?: boolean;
+    sync_dms?: boolean;
+    sync_comments?: boolean;
+  }): Promise<{ success: boolean; message: string; config?: any }> {
+    try {
+      const res = await fetch(`${API_BASE}/integrations/instagram/connect`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+      return await res.json();
+    } catch (e) {
+      return { success: false, message: 'Server bilan aloqa xatosi' };
+    }
+  },
+
+  // WhatsApp Connect
+  async connectWhatsApp(data: {
+    phone_number_id: string;
+    waba_id: string;
+    access_token?: string;
+    phone_number?: string;
+    business_name?: string;
+    auto_lead?: boolean;
+  }): Promise<{ success: boolean; message: string; config?: any }> {
+    try {
+      const res = await fetch(`${API_BASE}/integrations/whatsapp/connect`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+      return await res.json();
+    } catch (e) {
+      return { success: false, message: 'Server bilan aloqa xatosi' };
+    }
+  },
+
+  // Facebook Connect
+  async connectFacebook(data: {
+    page_name: string;
+    page_id: string;
+    page_token?: string;
+    lead_ads_sync?: boolean;
+    sync_messenger?: boolean;
+  }): Promise<{ success: boolean; message: string; config?: any }> {
+    try {
+      const res = await fetch(`${API_BASE}/integrations/facebook/connect`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+      return await res.json();
+    } catch (e) {
+      return { success: false, message: 'Server bilan aloqa xatosi' };
+    }
+  },
+
+  // Safe Disconnect (Non-destructive)
+  async disconnectIntegration(id: string): Promise<{ success: boolean; message: string }> {
+    try {
+      const res = await fetch(`${API_BASE}/integrations/${id}/disconnect`, {
+        method: 'POST'
+      });
+      return await res.json();
+    } catch (e) {
+      return { success: false, message: 'Server bilan aloqa xatosi' };
+    }
+  },
+
+  // Health check
+  async getIntegrationHealth(id: string): Promise<any> {
+    try {
+      const res = await fetch(`${API_BASE}/integrations/${id}/health`);
+      return await res.json();
+    } catch (e) {
+      return { ok: false, message: 'Server bilan aloqa xatosi' };
+    }
+  },
+
+  // Simulate Inbound Lead (Automated CRM Pipeline)
+  async simulateInboundLead(data: {
+    channel: string;
+    sender_name: string;
+    phone?: string;
+    username?: string;
+    message_text: string;
+    industry?: string;
+    target_column?: string;
+  }): Promise<{ success: boolean; message: string; deal?: any; client?: any }> {
+    try {
+      const res = await fetch(`${API_BASE}/integrations/simulate-lead`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+      return await res.json();
+    } catch (e) {
+      return { success: false, message: 'Server bilan aloqa xatosi' };
+    }
   }
 };
 
@@ -1267,4 +1486,5 @@ export interface IntegrationItem {
     latencyMs: number;
   };
 }
+
 

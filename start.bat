@@ -11,6 +11,6 @@ start "Odim - Vite Frontend (Port 5173)" cmd /k "npm run dev"
 echo.
 echo Barcha xizmatlar alohida oynalarda ishga tushirildi:
 echo  - Frontend:         http://localhost:5173
-echo  - FastAPI Backend:  http://127.0.0.1:8000
+echo  - FastAPI Backend:  http://localhost:8000
 echo  - Node.js Backend:  http://localhost:3001
 echo.
