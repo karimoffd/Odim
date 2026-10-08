@@ -620,6 +620,13 @@ io.on('connection', (socket) => {
     }
   });
 
+  socket.on('CLEAR_ALL_CHATS', () => {
+    const db = loadDb();
+    db.contacts = {};
+    saveDb(db);
+    io.emit('CHAT_HISTORY', []);
+  });
+
   socket.on('DELETE_SAVED_GIF', (data) => {
     const { gifUrl } = data;
     const db = loadDb();

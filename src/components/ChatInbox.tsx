@@ -265,116 +265,11 @@ interface ChatContact {
   avatarType?: 'alisher' | 'gulom' | 'nigora' | 'arlene' | 'jacob' | 'default';
 }
 
-const DEFAULT_OMNICHANNEL_CONTACTS: ChatContact[] = [
-  {
-    chatId: 'ig-alisher',
-    name: 'Alisher Nabiyev',
-    lastMessage: 'typing...',
-    time: '07:40 AM',
-    source: 'instagram',
-    unreadCount: 0,
-    isOnline: true,
-    isTyping: true,
-    avatarType: 'alisher',
-    phone: '+998 90 777 12 34',
-    company: 'Nabiyev Tech Solutions',
-    dealStatus: 'Muzokara jarayonida',
-    messages: [
-      { id: 1, text: 'Salom, yangi loyiha bo‘yicha taklifingizni ko‘rib chiqdik. Bugun batafsil gaplashsak bo‘ladimi?', time: '04:22 PM', isMe: true },
-      { id: 2, text: 'Assalomu alaykum! Albatta, qulay vaqtni aytsangiz, online uchrashuv tashkil qilamiz.', time: '04:22 PM', isMe: false }
-    ]
-  },
-  {
-    chatId: 'ig-gulom',
-    name: "G'ulom G'ofurov",
-    lastMessage: 'Please carry it carefully',
-    time: '07:45 AM',
-    source: 'instagram',
-    unreadCount: 1,
-    isOnline: true,
-    avatarType: 'gulom',
-    phone: '+998 91 234 56 78',
-    company: 'Gofurov Logistics',
-    dealStatus: 'Yangi so\'rov',
-    messages: [
-      { id: 1, text: 'Assalomu alaykum, tovarlarni jo‘natishga tayyormiz.', time: '07:40 AM', isMe: true },
-      { id: 2, text: 'Please carry it carefully', time: '07:45 AM', isMe: false }
-    ]
-  },
-  {
-    chatId: 'ig-nigora',
-    name: 'Nigora Karimova',
-    lastMessage: 'Missed call',
-    time: '08:23 AM',
-    source: 'instagram',
-    unreadCount: 0,
-    isOnline: false,
-    isMissedCall: true,
-    avatarType: 'nigora',
-    phone: '+998 93 456 78 90',
-    company: 'Karimova Studio',
-    dealStatus: 'Qayta aloqa kutilmoqda',
-    messages: [
-      { id: 1, text: 'Missed call', time: '08:23 AM', isMe: false }
-    ]
-  },
-  {
-    chatId: 'tg-arlene',
-    name: 'AArlene Lily',
-    lastMessage: 'audio file',
-    time: '09:35 AM',
-    source: 'telegram',
-    unreadCount: 0,
-    isOnline: true,
-    isAudio: true,
-    avatarType: 'arlene',
-    phone: '+998 99 888 77 66',
-    company: 'Global Media Agency',
-    dealStatus: 'Muzokara jarayonida',
-    messages: [
-      { id: 1, text: 'audio file', time: '09:35 AM', isMe: false }
-    ]
-  },
-  {
-    chatId: 'fb-jacob',
-    name: 'Jacob Jones',
-    lastMessage: 'Okay',
-    time: 'Yesterday',
-    source: 'facebook',
-    unreadCount: 1,
-    isOnline: false,
-    avatarType: 'jacob',
-    phone: '+998 95 111 22 33',
-    company: 'Jones Trading Co.',
-    dealStatus: 'Taklif yuborildi',
-    messages: [
-      { id: 1, text: 'Shartnomani tasdiqlab berishingiz mumkinmi?', time: 'Kecha 17:30', isMe: true },
-      { id: 2, text: 'Okay', time: 'Yesterday', isMe: false }
-    ]
-  },
-  {
-    chatId: 'tg-1',
-    name: 'Otabek Mirzayev',
-    lastMessage: 'Katta partiya buyurtmasi bo\'yicha qayta aloqaga chiqasizmi?',
-    time: '14:20',
-    source: 'telegram',
-    unreadCount: 1,
-    isOnline: true,
-    avatarType: 'default',
-    phone: '+998 90 123 45 67',
-    company: 'Silk Road Logistics',
-    dealStatus: 'Muzokara jarayonida',
-    messages: [
-      { id: 1, text: 'Assalomu alaykum, yangi katalog bo\'yicha savolim bor edi', time: '14:15', isMe: false },
-      { id: 2, text: 'Va alaykum assalom! Albatta, qaysi tovarlar qiziqtiryapti?', time: '14:18', isMe: true },
-      { id: 3, text: 'Katta partiya buyurtmasi bo\'yicha qayta aloqaga chiqasizmi?', time: '14:20', isMe: false },
-    ]
-  }
-];
+const DEFAULT_OMNICHANNEL_CONTACTS: ChatContact[] = [];
 
 export default function ChatInbox() {
-  const [contacts, setContacts] = useState<ChatContact[]>(DEFAULT_OMNICHANNEL_CONTACTS);
-  const [activeChatId, setActiveChatId] = useState<string>('ig-alisher');
+  const [contacts, setContacts] = useState<ChatContact[]>([]);
+  const [activeChatId, setActiveChatId] = useState<string | null>(null);
   const [channelFilter, setChannelFilter] = useState<'all' | 'telegram' | 'instagram' | 'facebook'>('all');
   const [showCustomerCard, setShowCustomerCard] = useState(true);
   const [dealModalOpen, setDealModalOpen] = useState(false);
@@ -437,12 +332,13 @@ export default function ChatInbox() {
     setSocket(newSocket);
 
     newSocket.on('CHAT_HISTORY', (history: ChatContact[]) => {
-      const existingIds = new Set(DEFAULT_OMNICHANNEL_CONTACTS.map(d => d.chatId));
-      const combined = [
-        ...DEFAULT_OMNICHANNEL_CONTACTS,
-        ...history.filter(h => !existingIds.has(h.chatId))
-      ];
-      setContacts(combined);
+      const list = Array.isArray(history) ? history : [];
+      setContacts(list);
+      if (list.length > 0) {
+        setActiveChatId(prev => (prev && list.some(c => c.chatId === prev) ? prev : list[0].chatId));
+      } else {
+        setActiveChatId(null);
+      }
     });
 
     newSocket.on('SAVED_GIFS', (gifs: string[]) => {
@@ -629,6 +525,18 @@ export default function ChatInbox() {
     }
   };
 
+  const handleClearAllChats = () => {
+    if (contacts.length === 0) return;
+    const confirmClear = window.confirm("Haqiqatan ham Yagona Inboxdagi barcha suhbatlar tarixini tozalashni xohlaysizmi?");
+    if (confirmClear) {
+      if (socket) {
+        socket.emit('CLEAR_ALL_CHATS');
+      }
+      setContacts([]);
+      setActiveChatId(null);
+    }
+  };
+
   const startCall = async () => {
     if (!socket || !activeChat) return;
     setIsCalling(true);
@@ -759,6 +667,17 @@ export default function ChatInbox() {
             <RiInstagramFill size={17} />
             <span>{isSendingTest ? "Yuborilmoqda..." : "+ Test Instagram xabari"}</span>
           </button>
+          {contacts.length > 0 && (
+            <button
+              className="top-profile-btn"
+              onClick={handleClearAllChats}
+              title="Barcha suhbatlar tarixini tozalash"
+              style={{ color: '#ef4444' }}
+            >
+              <RiDeleteBinLine size={16} />
+              <span>Tozalash</span>
+            </button>
+          )}
           <button
             className={`top-profile-btn ${showCustomerCard ? 'active' : ''}`}
             onClick={() => setShowCustomerCard(!showCustomerCard)}
@@ -781,7 +700,21 @@ export default function ChatInbox() {
 
           <div className="contacts-list">
             {contacts.filter(c => channelFilter === 'all' || c.source === channelFilter).length === 0 ? (
-              <div style={{padding: '30px', color: '#94a3b8', textAlign: 'center', fontSize: '14px'}}>Suhbatlar topilmadi</div>
+              <div style={{
+                padding: '48px 20px',
+                color: '#64748b',
+                textAlign: 'center',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                gap: '10px'
+              }}>
+                <TbMessageCircle size={36} style={{ color: '#94a3b8', strokeWidth: 1.5 }} />
+                <span style={{ fontSize: '14px', fontWeight: 600, color: '#334155' }}>Hozircha suhbatlar yo'q</span>
+                <span style={{ fontSize: '12px', color: '#94a3b8', maxWidth: '200px', lineHeight: 1.4 }}>
+                  Mijozlar yozgan xabarlar avtomatik bu yerda ko'rinadi
+                </span>
+              </div>
             ) : (
               contacts.filter(c => channelFilter === 'all' || c.source === channelFilter).map(c => (
                 <div 

@@ -173,6 +173,21 @@ export default function IntegrationsView() {
       setTestResult(res);
       if (res.ok) {
         showToast(res.message || "Aloqa muvaffaqiyatli tekshirildi!", 'success');
+        if (res.latencyMs) {
+          setIntegrations(prev =>
+            prev.map(item =>
+              item.id === id
+                ? {
+                    ...item,
+                    stats: {
+                      ...(item.stats || { totalMessages: 0, leadsGenerated: 0, latencyMs: 0 }),
+                      latencyMs: res.latencyMs
+                    }
+                  }
+                : item
+            )
+          );
+        }
       } else {
         showToast(res.message || "Ulanishda xatolik aniqlandi!", 'error');
       }
